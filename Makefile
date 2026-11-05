@@ -7,7 +7,7 @@ all: build/deadline
 
 build/deadline: workload/deadline.c
 	mkdir -p build
-	$(QCC) -V$(QNX_VARIANT) -std=c11 -O2 -Wall -Wextra -Werror -pthread $< -o $@
+	$(QCC) -V$(QNX_VARIANT) -std=c11 -O2 -Wall -Wextra -Werror $< -o $@
 
 clean:
 	rm -f build/deadline

@@ -1,0 +1,55 @@
+QNX deadline debugger
+Capture: fault, control job 0
+
+Control job 0 finished 8.87 ms late. After becoming ready, it waited 26.38 ms for its first CPU dispatch. During that wait, background occupied the CPU for 25.82 ms (97.9%). Its FIFO priority was 30, above control’s priority of 20. The remaining wait includes other guest threads and scheduler or interrupt transitions. Response time was 28.87 ms against a 20.00 ms deadline.
+
+QEMU guest timings. No hardware real-time guarantee.
+
+The other run: 2.69 ms response, 0.00 ms late.
+Control priority: 20. Background priority: 30.
+Clock alignment uncertainty: ±30398 ns.
+
+Source: fault.trace
+Text export SHA-256: 21e268328ac41e35f47b418f119855edddfd4b8e05dedac8c4f2aa3bcc18f1ba
+
+Underlying events:
+
+config, line 3362:
+c:8d6833c5ed CPU:0 USREVENT:EVENT:100 STR:"DD1 config mode=fault pid=4677649 epoch_ns=181114881564 period_ns=100000000 deadline_ns=20000000 jobs=20 cpus=1", d0:0x20314444 d1:0x666e6f63 d2:0x6d206769 d3:0x3d65646f d4:0x6c756166 d5:0x69702074 d6:0x36343d64 d7:0x34363737 d8:0x70652039 d9:0x5f68636f d10:0x313d736e d11:0x31313138 d12:0x31383834 d13:0x20343635 d14:0x69726570 d15:0x6e5f646f d16:0x30313d73 d17:0x30303030 d18:0x20303030 d19:0x64616564 d20:0x656e696c d21:0x3d736e5f d22:0x30303032 d23:0x30303030 d24:0x626f6a20 d25:0x30323d73 d26:0x75706320 d27:0x00313d73
+Decoded user payload: DD1 config mode=fault pid=4677649 epoch_ns=181114881564 period_ns=100000000 deadline_ns=20000000 jobs=20 cpus=1
+
+clock, line 3361:
+c:8d682ce26c CPU:0 USREVENT:EVENT:100 STR:"DD1 sync now_ns=180114587575 cycles_before=607337177850 cycles_after=607337375548", d0:0x20314444 d1:0x636e7973 d2:0x776f6e20 d3:0x3d736e5f d4:0x31303831 d5:0x38353431 d6:0x35373537 d7:0x63796320 d8:0x5f73656c d9:0x6f666562 d10:0x363d6572 d11:0x33333730 d12:0x37373137 d13:0x20303538 d14:0x6c637963 d15:0x615f7365 d16:0x72657466 d17:0x3730363d d18:0x33373333 d19:0x34353537 d20:0x00000038 d21:0x00000000
+Decoded user payload: DD1 sync now_ns=180114587575 cycles_before=607337177850 cycles_after=607337375548
+
+worker, line 3406:
+c:8d68902ddd CPU:0 USREVENT:EVENT:100 STR:"DD1 worker=control pid=4677649 tid=3 priority=20 offset_ns=5000000 work_ns=2000000", d0:0x20314444 d1:0x6b726f77 d2:0x633d7265 d3:0x72746e6f d4:0x70206c6f d5:0x343d6469 d6:0x36373736 d7:0x74203934 d8:0x333d6469 d9:0x69727020 d10:0x7469726f d11:0x30323d79 d12:0x66666f20 d13:0x5f746573 d14:0x353d736e d15:0x30303030 d16:0x77203030 d17:0x5f6b726f d18:0x323d736e d19:0x30303030 d20:0x00003030 d21:0x00000000
+Decoded user payload: DD1 worker=control pid=4677649 tid=3 priority=20 offset_ns=5000000 work_ns=2000000
+
+background, line 3381:
+c:8d6867d494 CPU:0 USREVENT:EVENT:100, d0:0x20314444 d1:0x6b726f77 d2:0x623d7265 d3:0x676b6361 d4:0x6e756f72 d5:0x69702064 d6:0x36343d64 d7:0x34363737 d8:0x69742039 d9:0x20323d64 d10:0x6f697270 d11:0x79746972 d12:0x2030333d d13:0x7366666f d14:0x6e5f7465 d15:0x20303d73 d16:0x6b726f77 d17:0x3d736e5f d18:0x30303033 d19:0x30303030
+Decoded user payload: DD1 worker=background pid=4677649 tid=2 priority=30 offset_ns=0 work_ns=30000000
+
+ready, line 4233:
+c:8e2b0a2ddc CPU:0 THREAD:THREADY pid:4677649 tid:3 priority:20 policy:1
+
+running, line 4246:
+c:8e3027250c CPU:0 THREAD:THRUNNING pid:4677649 tid:3 priority:20 policy:1
+
+start, line 4247:
+c:8e302cae7a CPU:0 USREVENT:EVENT:100 STR:"DD1 start worker=control job=0 release_ns=181119881564 deadline_ns=181139881564 now_ns=181146670032", d0:0x20314444 d1:0x72617473 d2:0x6f772074 d3:0x72656b72 d4:0x6e6f633d d5:0x6c6f7274 d6:0x626f6a20 d7:0x7220303d d8:0x61656c65 d9:0x6e5f6573 d10:0x38313d73 d11:0x39313131 d12:0x35313838 d13:0x64203436 d14:0x6c646165 d15:0x5f656e69 d16:0x313d736e d17:0x33313138 d18:0x31383839 d19:0x20343635 d20:0x5f776f6e d21:0x313d736e d22:0x34313138 d23:0x30373636 d24:0x00323330 d25:0x00000000
+Decoded user payload: DD1 start worker=control job=0 release_ns=181119881564 deadline_ns=181139881564 now_ns=181146670032
+
+finish, line 4248:
+c:8e30924e38 CPU:0 USREVENT:EVENT:100 STR:"DD1 finish worker=control job=0 now_ns=181148754511 deadline_ns=181139881564", d0:0x20314444 d1:0x696e6966 d2:0x77206873 d3:0x656b726f d4:0x6f633d72 d5:0x6f72746e d6:0x6f6a206c d7:0x20303d62 d8:0x5f776f6e d9:0x313d736e d10:0x34313138 d11:0x34353738 d12:0x20313135 d13:0x64616564 d14:0x656e696c d15:0x3d736e5f d16:0x31313831 d17:0x38383933 d18:0x34363531 d19:0x00000000
+Decoded user payload: DD1 finish worker=control job=0 now_ns=181148754511 deadline_ns=181139881564
+
+Background running intervals overlapping the initial dispatch wait:
+
+21890849 ns within the wait, lines 4235 to 4237:
+c:8e2b0bdb99 CPU:0 THREAD:THRUNNING pid:4677649 tid:2 priority:30 policy:1
+c:8e2f4a0ade CPU:0 THREAD:THREADY pid:4677649 tid:2 priority:30 policy:1
+
+3931368 ns within the wait, lines 4241 to 4243:
+c:8e2f5447f1 CPU:0 THREAD:THRUNNING pid:4677649 tid:2 priority:30 policy:1
+c:8e30175935 CPU:0 THREAD:THNANOSLEEP pid:4677649 tid:2 priority:30 policy:1

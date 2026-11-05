@@ -171,6 +171,16 @@ int main(int argc, char **argv)
     if (!strcmp(argv[1], "fixed"))
         background.priority = 10;
 
+#ifdef __QNXNTO__
+    uint64_t cycles_before = ClockCycles();
+    uint64_t anchor_ns = now_ns(CLOCK_MONOTONIC);
+    uint64_t cycles_after = ClockCycles();
+    snprintf(text, sizeof(text),
+             "DD1 sync now_ns=%" PRIu64 " cycles_before=%" PRIu64
+             " cycles_after=%" PRIu64,
+             anchor_ns, cycles_before, cycles_after);
+    mark(text);
+#endif
     epoch_ns = now_ns(CLOCK_MONOTONIC) + NS_PER_SECOND;
     snprintf(text, sizeof(text),
              "DD1 config mode=%s pid=%ld epoch_ns=%" PRIu64

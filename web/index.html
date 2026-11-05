@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10191c">
+  <title>QNX deadline debugger</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <header><a class="brand" href="/">QNX <span>deadline debugger</span></a><span class="environment">OS 8.0 · x86_64 · 1 CPU · QEMU</span><a class="source-link" href="https://github.com/adityareddy-dev/qnx-deadline-debugger">Source ↗</a></header>
+  <main>
+    <div class="intro"><div><p class="eyebrow">A CAPTURED SCHEDULING FAULT</p><h1>Why did the control task<br>miss its deadline?</h1><p class="subtitle">Follow the wait to the thread that occupied the CPU.<br>Then compare the same workload after one priority change.</p></div><div class="experiment"><span class="status-dot"></span> Two real kernel captures<p>20 control jobs per run<br>100 ms period · 20 ms deadline<br>Background priority: 30 → 10</p><small>Measured inside an emulated QNX guest.<br>No hardware real-time guarantee.</small></div></div>
+    <div id="error" role="alert" hidden></div>
+    <section class="metrics" aria-label="Measured comparison" id="metrics"></section>
+    <section class="workspace" aria-labelledby="timeline-title">
+      <div class="toolbar"><div><p class="eyebrow">KERNEL SCHEDULING TIMELINE</p><h2 id="timeline-title">One job, from release to finish</h2></div><div class="tabs" role="group" aria-label="Capture"><button id="fault-tab" class="active" aria-pressed="true">Fault <span>priority 30</span></button><button id="fixed-tab" aria-pressed="false">Fixed <span>priority 10</span></button></div></div>
+      <div class="timeline-controls"><label>Control job <select id="job" aria-label="Control job"></select></label><button id="previous" aria-label="Previous job">←</button><button id="next" aria-label="Next job">→</button><label class="zoom-label">View <select id="zoom"><option value="45">45 ms</option><option value="12">12 ms</option><option value="100">Full period</option></select></label><span id="job-status"></span></div>
+      <div class="timeline-wrap"><svg id="timeline" viewBox="0 0 1100 270" role="img" aria-label="Control task and CPU schedule"></svg></div>
+      <div class="legend"><span><i class="waiting"></i>Ready, waiting for CPU</span><span><i class="running"></i>Control running</span><span><i class="background"></i>Background running</span><span><i class="other"></i>Other guest threads</span><span class="deadline-key">┊ Deadline</span></div>
+      <p class="timeline-note">Times are relative to this job’s planned release. Select a colored interval or an evidence link to read the source event. Thin gaps are scheduler or interrupt transitions without a running-thread record.</p>
+    </section>
+    <div class="details"><section class="explanation" aria-labelledby="explanation-title"><p class="eyebrow">WHAT THE CAPTURE SHOWS</p><h2 id="explanation-title"></h2><p id="explanation"></p><div id="facts"></div><div class="evidence-links" id="evidence-links"></div><button id="export" class="export">↓ Export incident explanation</button></section><section class="evidence" aria-labelledby="evidence-title"><div class="evidence-heading"><div><p class="eyebrow">ORIGINAL EVENT EVIDENCE</p><h2 id="evidence-title">Trace source</h2></div><a id="raw-link" href="/sources/fault.trace" download>Text export ↓</a></div><p id="source-location"></p><pre id="event-source" tabindex="0"></pre><p id="clock-note"></p></section></div>
+    <section class="jobs-section"><div class="section-heading"><div><p class="eyebrow">ALL 20 CONTROL JOBS</p><h2>Does the change hold across the run?</h2></div><p>Pick any row to inspect its events.</p></div><div class="table-scroll"><table><thead><tr><th>Job</th><th>Fault response</th><th>Fault late by</th><th>Fixed response</th><th>Fixed late by</th><th>Result</th></tr></thead><tbody id="jobs-table"></tbody></table></div></section>
+    <section class="method"><div><p class="eyebrow">REPRODUCE THE COMPARISON</p><h2>A single priority change.</h2><p>Two FIFO threads share one guest CPU. Control needs 2 ms of CPU every 100 ms, starting 5 ms after a background task that needs 30 ms. In the fault, background priority 30 outranks control priority 20. The fix lowers background priority to 10.</p><p>The ready and running events show the scheduling delay. The workload markers supply the planned deadlines and observed completion times. The parser keeps these two sources separate and links both.</p></div><div class="capture-files"><h3>Original captures</h3><a href="/sources/fault.kev" download>Fault · kernel events (.kev) ↓</a><a href="/sources/fixed.kev" download>Fixed · kernel events (.kev) ↓</a><a href="/sources/fault.trace" download>Fault · traceprinter export ↓</a><a href="/sources/fixed.trace" download>Fixed · traceprinter export ↓</a><p id="integrity"></p></div></section>
+    <footer>QNX deadline debugger <span>Guest measurements · Original events · Reproducible comparison</span></footer>
+  </main>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "fault": {
+    "jobs": 20,
+    "misses": 20,
+    "max_response_ns": 29945472,
+    "mean_response_ns": 28890216,
+    "max_dispatch_wait_ns": 26861119
+  },
+  "fixed": {
+    "jobs": 20,
+    "misses": 0,
+    "max_response_ns": 4834627,
+    "mean_response_ns": 2613404,
+    "max_dispatch_wait_ns": 768799
+  }
+}

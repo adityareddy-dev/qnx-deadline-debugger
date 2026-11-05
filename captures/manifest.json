@@ -1,0 +1,72 @@
+{
+  "recorded_at": "2026-11-05T16:43:45-06:00",
+  "timezone": "America/Chicago",
+  "target": "QNX OS 8.0.0, x86_64, one CPU, procnto-smp-instr",
+  "kernel_build": "2026/06/05-16:26:03EDT",
+  "qnx_sdp": "8.0.0.00141T202311271501L",
+  "qemu_image_package": "com.qnx.qnx800.quickstart.qemu 0.5.0.00050T202609021847L (Build 50)",
+  "host_compiler": "qcc -Vgcc_ntox86_64 (GCC 12.2.0)",
+  "qemu": "10.2.1, TCG, pc, -cpu max, -smp 1, -m 2048, virtio-net-pci, IDE disk",
+  "host_acceleration": "TCG (no /dev/kvm)",
+  "timing": "Guest monotonic time. No hardware real-time guarantee.",
+  "build_command": "make, after sourcing qnxsdp-env.sh",
+  "capture_command": "tracelogger -w -c -s 8 -k 128 -b 128 -F1 -F2 -F6 -F7 -f <mode>.kev",
+  "workload_commands": [
+    "sleep 1; ./deadline fault; wait",
+    "sleep 1; ./deadline fixed; wait"
+  ],
+  "export_command": "traceprinter -f captures/<mode>.kev -o captures/<mode>.trace -p 'c:%c CPU:%C %Z:%z'",
+  "capture_logs": {
+    "fault.log": "empty, tracelogger exit status 0",
+    "fixed.log": "empty, tracelogger exit status 0"
+  },
+  "results": {
+    "fault": {
+      "jobs": 20,
+      "misses": 20,
+      "max_response_ns": 29794727,
+      "mean_response_ns": 28383863,
+      "max_dispatch_wait_ns": 26723064
+    },
+    "fixed": {
+      "jobs": 20,
+      "misses": 0,
+      "max_response_ns": 4144699,
+      "mean_response_ns": 2772419,
+      "max_dispatch_wait_ns": 163511
+    }
+  },
+  "sha256": {
+    "workload/deadline.c": "611d259cf7b77456764d2606878bf088271d94b43a5caccad8cbd56fe11278ec",
+    "build/deadline": "19c1d027c3c7acc3853d4c897d0163cbe91f8fe1bbdc0dd08be3b66e192ff126",
+    "captures/fault.kev": "f0e20fb87f4261bc781c679ecfc383f0272463a0b84ab35e77bfc7c9aa3453d5",
+    "captures/fixed.kev": "fc713f1004b565ca64206f5c06553a9a48e3733ec60e223050a30a76e60b09d4",
+    "captures/fault.trace": "21e268328ac41e35f47b418f119855edddfd4b8e05dedac8c4f2aa3bcc18f1ba",
+    "captures/fixed.trace": "4ba821b9cee0c9ff5fbb402b1a9dbfa3f4780a5d4cd2bf443b82aa9b68253dcd",
+    "captures/repeat/fault.kev": "001540fa56f5694dc4ee13b1806c4757d1fddf3a26b7ee3f114ad7b8c872ee20",
+    "captures/repeat/fault.trace": "6dde59aab4bcfa45744e2ee0fb723e3d38c0bf4a389ca03e5738904c1065601f",
+    "captures/repeat/fixed.kev": "0d9b7c007711f5b945f4e70aa69097f04bcacc2e276a3cad150a3c9a98f90781",
+    "captures/repeat/fixed.trace": "8555fc09773c7eba795976612bf24fbc9148a2116a350c2c3487c1ffee677a55",
+    "captures/repeat/results.json": "334e7c4af7a2a9ffa4c59923e01a04e1835bdd3136a4c9e1fd999ceb01b246b5"
+  },
+  "repeat": {
+    "recorded_at": "Thu Nov  5 22:53:11 2026 UTC",
+    "method": "scripts/capture.sh, same compiled workload and same booted guest",
+    "results": {
+      "fault": {
+        "jobs": 20,
+        "misses": 20,
+        "max_response_ns": 29945472,
+        "mean_response_ns": 28890216,
+        "max_dispatch_wait_ns": 26861119
+      },
+      "fixed": {
+        "jobs": 20,
+        "misses": 0,
+        "max_response_ns": 4834627,
+        "mean_response_ns": 2613404,
+        "max_dispatch_wait_ns": 768799
+      }
+    }
+  }
+}
