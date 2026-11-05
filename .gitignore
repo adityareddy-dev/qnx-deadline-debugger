@@ -5,3 +5,4 @@ node_modules/
 *.qcow2
 *.img
 qnx800/
+build/
